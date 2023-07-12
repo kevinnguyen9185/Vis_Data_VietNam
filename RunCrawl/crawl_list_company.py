@@ -5,7 +5,6 @@ from Crawl import VietStock
 import Flow.PATH_env as PATH_env
 import time
 
-
 def run_reset_vs():
     '''
     Reset VietStock\n'''
@@ -16,7 +15,6 @@ def run_reset_vs():
 
 
 PATH_ = PATH_env.PATH_ENV("Ingestion")
-
 
 def crawl(path):
     '''
@@ -33,7 +31,6 @@ def crawl(path):
     return check
 
 webVS = VietStock.Other()
-
 
 def crawl_list_com(path, real=False):
     '''
@@ -56,7 +53,6 @@ def crawl_list_com(path, real=False):
 
 PATH_ = PATH_env.PATH_ENV("Ingestion")
 batch = sys.argv[1]
-
 if batch == "normal":
     crawl_list_com(
         f'{PATH_.joinPath(PATH_.PATH_MAIN_CURRENT,"List_company")}.csv')

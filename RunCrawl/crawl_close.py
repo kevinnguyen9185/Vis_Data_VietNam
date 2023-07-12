@@ -6,6 +6,8 @@ import pandas as pd
 from Flow import PATH_env
 import datetime
 
+import time
+time.sleep(5)
 PATH_ = PATH_env.PATH_ENV("Ingestion")
 start = PATH_.DateCurrent - datetime.timedelta(days=180)
 start = start.strftime("%d/%m/%Y")

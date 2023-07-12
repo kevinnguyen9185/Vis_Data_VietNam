@@ -73,7 +73,7 @@ class Setup():
         chrome_options.add_argument('--disable-gpu')
         self.driver = webdriver.Chrome('chromedriver',chrome_options=chrome_options)
 
-    def reset_driver(self, path="C:\web_driver/chromedriver.exe",source="CF"):
+    def reset_driver(self, path="C:/web_driver/chromedriver.exe",source="CF"):
         '''
         Khởi tạo trình duyệt Selenium
         '''
@@ -86,7 +86,7 @@ class Setup():
             chrome_options.add_argument('--disable-dev-shm-usage')
             chrome_options.add_argument('--disable-browser-side-navigation')
             chrome_options.add_argument('--disable-gpu')
-        self.driver = webdriver.Chrome(executable_path=path,chrome_options=chrome_options)
+        self.driver = webdriver.Chrome(options=chrome_options)
 
     def request_link(self,link,time=5):
         '''

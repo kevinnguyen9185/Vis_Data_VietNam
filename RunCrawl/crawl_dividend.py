@@ -1,8 +1,8 @@
 import sys
 import time
 sys.path.append("C:\DataVietNam")
-
-
+import time
+time.sleep(5)
 from Crawl import CafeF
 from Crawl import VietStock
 import pandas as pd

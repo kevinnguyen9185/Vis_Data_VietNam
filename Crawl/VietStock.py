@@ -46,6 +46,7 @@ class FinanStatement(setup.Setup):
         if df.empty:
             df = df.append({"symbol":symbol,"year":year,"tilteVS":"","LinkVS":""},ignore_index=True)
         return df
+ 
     def BalanceSheet(self,PeriodType):
         '''
         Lấy báo cáo tài chính cân đối\n

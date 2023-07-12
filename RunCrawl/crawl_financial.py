@@ -7,6 +7,7 @@ from Flow import PATH_env,RUN
 import datetime
 import time
 import json
+time.sleep(5)   
 
 PATH_ = PATH_env.PATH_ENV("Ingestion")
 start = PATH_.DateCurrent - datetime.timedelta(days=90)
