@@ -66,16 +66,16 @@ class PATH_ENV():
         Input: Type: Loại thư mục \n
         Output: None'''
         if Type == "Ingestion":
-            PATH_Data = "G:\My Drive\DataVIS\VietNam\Data Lake\Ingestion"
+            PATH_Data = "/Volumes/KINGSTON/Vis-data/VietNam/Data Lake/Ingestion"
         elif Type == "Raw_VIS":
-            PATH_Data = "G:\My Drive\DataVIS\VietNam\Data Lake\Raw_VIS"
+            PATH_Data = "/Volumes/KINGSTON/Vis-data/VietNam/Data Lake/Raw_VIS"
         elif Type == "WH":
-            PATH_Data = "G:\My Drive\DataVIS\VietNam\Data WareHouse"
+            PATH_Data = "/Volumes/KINGSTON/Vis-data/VietNam/Data WareHouse"
             self.PATH_MAIN = PATH_Data
             self.PATH_CLOSE = self.joinPath(self.PATH_MAIN,"Close")
             return 
         else:
-            PATH_Data = "G:\My Drive\DataVIS\VietNam\Data Lake\Data_Rule"
+            PATH_Data = "/Volumes/KINGSTON/Vis-data/VietNam/Data Lake/Data_Rule"
         self.PATH_MAIN = PATH_Data
         self.PATH_MAIN_CURRENT = self.joinPath(self.PATH_MAIN,self.DayCurrent)
         self.PATH_CLOSE = self.joinPath(self.PATH_MAIN,self.DayCurrent,"Close")

@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'C:\DataVietNam')
+sys.path.append(r'/Users/lap15942/mygit/Vis_Data_VietNam')
 import pandas as pd
 from Crawl import VietStock
 import Flow.PATH_env as PATH_env
@@ -20,13 +20,18 @@ def crawl(path):
     '''
     Crawl List Company \n'''
     global webVS
+    check=False
     try:
         webVS = VietStock.Other()
+        print("Dang dang nhap VS-------------------")
         webVS.login_VS()
+        print("Dang lay danh sach cong ty-------------------")
         data = webVS.Listing()
+        print("Da lay xong danh sach cong ty-------------------")
         data.to_csv(path, index=False)
         check = True
-    except:
+    except Exception as ex:
+        print(ex)
         run_reset_vs()
     return check
 

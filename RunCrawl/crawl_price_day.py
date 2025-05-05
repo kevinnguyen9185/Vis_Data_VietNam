@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'C:\DataVietNam')
+sys.path.append(r'/Users/lap15942/mygit/Vis_Data_VietNam')
 import datetime
 from Flow import PATH_env
 from Crawl import SSI

@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'C:\DataVietNam')
+sys.path.append(r'/Users/lap15942/mygit/Vis_Data_VietNam')
 from Crawl import CafeF
 from Crawl import VietStock
 import pandas as pd
@@ -10,7 +10,7 @@ import json
 time.sleep(5)   
 
 PATH_ = PATH_env.PATH_ENV("Ingestion")
-start = PATH_.DateCurrent - datetime.timedelta(days=90)
+start = PATH_.DateCurrent - datetime.timedelta(days=365)
 y = start.year
 if start.month in [1,2,3]:
     q = 1
@@ -195,15 +195,16 @@ for i in range(3):
     CheckStateCF_YEAR = []
     list_symbol = List_Symbol["Mã CK▲"]
     PATH = PATH_.joinPath(PATH_.PATH_FINANCIAL,"VietStock")
-    try:
-        webVS.CrawlWithBatch(list_symbol,q,f"{PATH}/Quarter")
-    except:
-        run_reset_vs()
+    # try:
+    #     webVS.CrawlWithBatch(list_symbol,q,f"{PATH}/Quarter")
+    # except:
+    #     run_reset_vs()
     
-    try:
-        webVS.CrawlWithBatch(list_symbol,y,f"{PATH}/Year")
-    except:
-        run_reset_vs()
+    # try:
+    #     webVS.CrawlWithBatch(list_symbol,y,f"{PATH}/Year")
+    # except Exception as e:
+    #     print("Loi VietStock",e)
+    #     run_reset_vs()
    
     for idx in List_Symbol.index:
         state_CF_Q,state_CF_Y = List_Symbol["CF_Q"][idx],List_Symbol["CF_Y"][idx]

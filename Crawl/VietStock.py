@@ -146,6 +146,11 @@ class FinanStatement(setup.Setup):
         element = self.find_element_by_other("txt-search-code",By.ID)
         element.clear()
         self.send_something_by_id("txt-search-code",str_symbol)
+        time.sleep(2)
+        self.click_something_by_other(".div-statement-button > .btn",By.CSS_SELECTOR)
+        time.sleep(2)
+        self.click_something_by_xpath('//*[@id="BCTC_message_alert_popup"]/div/div/div/div[3]/button')
+        time.sleep(2)
 
         if checkClick:
             ClickInput = ['//*[@id="group-option-multi"]/div[2]/table/tbody/tr[1]/td[1]/label/input',
@@ -169,8 +174,12 @@ class FinanStatement(setup.Setup):
             for i in ClickInput[::-1]:
                 # time.sleep(3)
                 self.click_something_by_xpath(i)
+        if type_time != 1 and type_time != 2 and type_time != 3 and type_time != 4:
+            self.click_select("txtFromYearPeriod", str(type_time))
+        self.click_something_by_xpath('//*[@id="BCTC_message_alert_popup"]/div/div/div/div[3]/button')
+        time.sleep(2)
         self.click_something_by_other(".div-statement-button > .btn",By.CSS_SELECTOR)
-        time.sleep(60)
+        time.sleep(10)
 
     def CrawlWithBatch(self,list_symbol,type_time,PATH):
         '''
@@ -181,6 +190,7 @@ class FinanStatement(setup.Setup):
         PATH: đường dẫn lưu file\n
         Output: DataFrame'''
         self.request_link("https://finance.vietstock.vn/truy-xuat-du-lieu/bao-cao-tai-chinh.htm")
+        print(list_symbol)
         checkClick = True
         for i in range(0,len(list_symbol),50):
             str_symbol = ",".join(list_symbol[i:i+50])
@@ -273,12 +283,15 @@ class Other(setup.Setup):
             '''
             Lấy thông tin niêm yết\n
             Output: DataFrame'''
-            data_1 = self.getTableForListing(self.CreateLink('LISTING'),"1")
-            data_2 = self.getTableForListing(self.CreateLink('LISTING'),"2")
-            data_3 = self.getTableForListing(self.CreateLink('LISTING'),"5")
-            data = pd.concat([data_1,data_2],ignore_index=True)
-            data = pd.concat([data,data_3],ignore_index=True)
-            return data
+            data_1 = self.getTableForListing(self.CreateLink('LISTING'),"0")
+            print(data_1)
+            # data_2 = self.getTableForListing(self.CreateLink('LISTING'),"2")
+            # print(data_2)
+            # data_3 = self.getTableForListing(self.CreateLink('LISTING'),"5")
+            # print(data_3)
+            # data = pd.concat([data_1,data_2],ignore_index=True)
+            # data = pd.concat([data,data_3],ignore_index=True)
+            return data_1
     def Delisting(self):
         '''
         Lấy thông tin hủy niêm yết\n
@@ -345,8 +358,10 @@ class Other(setup.Setup):
         Chọn sàn\n
         Input: exchange: sàn\n
         Output: DataFrame'''
-        self.click_select("exchange",exchange)
-        self.click_select("businessTypeID","1")
+        if exchange != "0":
+            self.click_select("exchange",exchange)
+        # self.click_select("businessTypeID","1")
+        print("click button")
         self.click_something_by_xpath('//*[@id="corporate-az"]/div/div[1]/div[1]/button')
         time.sleep(2)
 
@@ -361,9 +376,11 @@ class Other(setup.Setup):
         page_source = self.driver.page_source
         page = BeautifulSoup(page_source, 'html.parser')
         number_pages = self.getNumberPage(page)
+        print(number_pages)
         if number_pages > 1:
             # if self.list_symbol_listing.empty:
             self.list_symbol_listing = self.getTableInfor(page)
+            print(self.list_symbol_listing)
             for number_page in range(2, number_pages+1):
                 data_new = self.getNextTable()
                 self.list_symbol_listing= pd.concat([self.list_symbol_listing, data_new])
@@ -387,8 +404,12 @@ class Other(setup.Setup):
         time.sleep(1)
         list_table = page.find_all('table', {'class':
         'table table-striped table-bordered table-hover table-middle pos-relative m-b'})
-        try: return pd.read_html(str(list_table))[0]
-        except: return pd.DataFrame(columns=[i.text for i in list_table])
+        print(f"Found {len(list_table)} table")
+        try: 
+            return pd.read_html(str(list_table))[0]
+        except Exception as ex:
+            print(f"Error getTableInfor: {ex}") 
+            return pd.DataFrame(columns=[i.text for i in list_table])
             
     def getNumberPage(self, page):
         '''

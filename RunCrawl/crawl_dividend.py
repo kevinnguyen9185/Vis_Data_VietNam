@@ -1,6 +1,6 @@
 import sys
 import time
-sys.path.append("C:\DataVietNam")
+sys.path.append("/Users/lap15942/mygit/Vis_Data_VietNam")
 import time
 time.sleep(5)
 from Crawl import CafeF

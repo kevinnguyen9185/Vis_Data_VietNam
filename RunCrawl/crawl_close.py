@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'C:\DataVietNam')
+sys.path.append(r'/Users/lap15942/mygit/Vis_Data_VietNam')
 from Crawl import CafeF
 from Crawl import StockBiz
 import pandas as pd

@@ -12,6 +12,9 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import Select
 from Crawl.base.URL import URL_VIETSTOCK, USER,PASSWORD
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 pd.set_option('mode.chained_assignment', None)
 
@@ -64,7 +67,7 @@ class Setup():
         Khởi tạo trình duyệt Colab
         '''
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--start-maximized')
         chrome_options.add_argument('enable-automation')
@@ -73,7 +76,7 @@ class Setup():
         chrome_options.add_argument('--disable-gpu')
         self.driver = webdriver.Chrome('chromedriver',chrome_options=chrome_options)
 
-    def reset_driver(self, path="C:/web_driver/chromedriver.exe",source="CF"):
+    def reset_driver(self, path="/opt/homebrew/bin/chromedriver",source="CF"):
         '''
         Khởi tạo trình duyệt Selenium
         '''
@@ -86,7 +89,8 @@ class Setup():
             chrome_options.add_argument('--disable-dev-shm-usage')
             chrome_options.add_argument('--disable-browser-side-navigation')
             chrome_options.add_argument('--disable-gpu')
-        self.driver = webdriver.Chrome(options=chrome_options)
+        service = Service(ChromeDriverManager().install())
+        self.driver = webdriver.Chrome(options=chrome_options, service=service)
 
     def request_link(self,link,time=5):
         '''
@@ -203,11 +207,14 @@ class Setup():
         None'''
         try:
             element = WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located((By.ID, id))
+                EC.visibility_of_element_located((By.ID, id))
             )
+            self.driver.execute_script("arguments[0].scrollIntoView();", element)
             element.clear()
             element.send_keys(somthing)
-        except:
+            print(f"Sent {somthing}")
+        except Exception as e:
+            print(e)
             # self.driver.refresh()
             pass
     def send_something_by_other(self,somthing,other_txt,other):
@@ -317,10 +324,17 @@ class Setup():
         self.driver.get(self.VS)
         self.driver.maximize_window() 
         try:       
-            self.click_something_by_id('btn-request-call-login')
+            # self.click_something_by_id('btn-request-call-login')
+            print("Click Login VietStock Success")
             self.send_something_by_id('txtEmailLogin',self.user)
-            self.send_something_by_id('txtPassword',self.password)
+            print(f"Username {self.user} VietStock Success")
+            self.send_something_by_id('passwordLogin',self.password)
+            print(f"Password {self.password} VietStock Success")
             self.click_something_by_id('btnLoginAccount')
+            print("Login VietStock Success")
+        except Exception as e:
+            print(e)
+            print("Login VietStock Failed")
         finally:
             time.sleep(10)
             pass
