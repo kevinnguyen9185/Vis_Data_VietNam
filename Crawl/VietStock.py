@@ -190,7 +190,6 @@ class FinanStatement(setup.Setup):
         PATH: đường dẫn lưu file\n
         Output: DataFrame'''
         self.request_link("https://finance.vietstock.vn/truy-xuat-du-lieu/bao-cao-tai-chinh.htm")
-        print(list_symbol)
         checkClick = True
         for i in range(0,len(list_symbol),50):
             str_symbol = ",".join(list_symbol[i:i+50])
@@ -283,15 +282,19 @@ class Other(setup.Setup):
             '''
             Lấy thông tin niêm yết\n
             Output: DataFrame'''
-            data_1 = self.getTableForListing(self.CreateLink('LISTING'),"0")
-            print(data_1)
-            # data_2 = self.getTableForListing(self.CreateLink('LISTING'),"2")
-            # print(data_2)
-            # data_3 = self.getTableForListing(self.CreateLink('LISTING'),"5")
-            # print(data_3)
-            # data = pd.concat([data_1,data_2],ignore_index=True)
-            # data = pd.concat([data,data_3],ignore_index=True)
-            return data_1
+            data_1 = self.getTableForListing(self.CreateLink('LISTING_PTC'),"0")
+            print("LISTING_PC")
+            data_2 = self.getTableForListing(self.CreateLink('LISTING_NH'),"0")
+            print("LISTING_NH")
+            data_3 = self.getTableForListing(self.CreateLink('LISTING_CK'),"0")
+            print("LISTING_CK")
+            data_4 = self.getTableForListing(self.CreateLink('LISTING_BH'), "0")
+            print("LISTING_BH")
+            data = pd.concat([data_1,data_2],ignore_index=True)
+            data = pd.concat([data,data_3],ignore_index=True)
+            data = pd.concat([data, data_4], ignore_index=True)
+            return data
+
     def Delisting(self):
         '''
         Lấy thông tin hủy niêm yết\n
@@ -380,8 +383,8 @@ class Other(setup.Setup):
         if number_pages > 1:
             # if self.list_symbol_listing.empty:
             self.list_symbol_listing = self.getTableInfor(page)
-            print(self.list_symbol_listing)
             for number_page in range(2, number_pages+1):
+                print(f"page: {number_page}")
                 data_new = self.getNextTable()
                 self.list_symbol_listing= pd.concat([self.list_symbol_listing, data_new])
             return self.list_symbol_listing
@@ -404,7 +407,6 @@ class Other(setup.Setup):
         time.sleep(1)
         list_table = page.find_all('table', {'class':
         'table table-striped table-bordered table-hover table-middle pos-relative m-b'})
-        print(f"Found {len(list_table)} table")
         try: 
             return pd.read_html(str(list_table))[0]
         except Exception as ex:

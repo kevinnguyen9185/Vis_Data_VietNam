@@ -64,6 +64,7 @@ class FolderCrawl(FolderData):
         Input: None \n
         Output: None'''
         path = self.PATH_CLOSE
+        print(path)
         self.createFolder(path)
         for obj in self.CloseObject:
             self.createFolder(self.joinPath(path, obj))

@@ -1,5 +1,9 @@
 import sys
-sys.path.append(r'/Users/lap15942/mygit/Vis_Data_VietNam')
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+sys.path.append(os.getenv("PYTHONPATH"))
 from Crawl import CafeF
 from Crawl import VietStock
 import pandas as pd
@@ -200,11 +204,11 @@ for i in range(3):
     # except:
     #     run_reset_vs()
     
-    # try:
-    #     webVS.CrawlWithBatch(list_symbol,y,f"{PATH}/Year")
-    # except Exception as e:
-    #     print("Loi VietStock",e)
-    #     run_reset_vs()
+    try:
+        webVS.CrawlWithBatch(list_symbol,y,f"{PATH}/Year")
+    except Exception as e:
+        print("Loi VietStock",e)
+        run_reset_vs()
    
     for idx in List_Symbol.index:
         state_CF_Q,state_CF_Y = List_Symbol["CF_Q"][idx],List_Symbol["CF_Y"][idx]

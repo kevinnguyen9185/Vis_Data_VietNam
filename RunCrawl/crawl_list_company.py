@@ -1,5 +1,9 @@
 import sys
-sys.path.append(r'/Users/lap15942/mygit/Vis_Data_VietNam')
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+sys.path.append(os.getenv("PYTHONPATH"))
 import pandas as pd
 from Crawl import VietStock
 import Flow.PATH_env as PATH_env
